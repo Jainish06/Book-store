@@ -1,20 +1,19 @@
- import express from "express";
- import { PORT, mongoDBURL } from "./config.js";
- import mongoose  from "mongoose";
- import { Book } from "./models/bookmodel.js";
+import express from "express";
+import { PORT } from "./config.js";
+import { Book } from "./models/bookmodel.js";
+import connectToMongo from "./database/db.js"
+const app = express()
+connectToMongo()
+app.use(express.json());
 
- const app = express()
+app.get('/', (request, response) => {
+   console.log(request);
+   return response.status(234).send('Hello')
+});
 
- app.use(express.json());
-
- app.get('/', (request, response) => {
-    console.log(request);
-    return response.status(234).send('Hello')
- });
-
- app.post('/books', async (request,response) => {
-   try{
-      if(
+app.post('/books', async (request, response) => {
+   try {
+      if (
          !res.body.title ||
          !res.body.author ||
          !res.body.publisYear
@@ -33,20 +32,12 @@
 
       return response.status(201).send(book);
 
-   } catch(error){
+   } catch (error) {
       console.log(error.message);
-      response.status(500).send({ message: error.message});
+      response.status(500).send({ message: error.message });
    }
- });
+});
 
- mongoose
-   .connect(mongoDBURL)
-   .then(() => {
-      console.log('App connected  to database');
-      app.listen(PORT, () => {
-         console.log(`App listening to port : ${PORT}`);
-      });
-   })
-   .catch((error) => {
-      console.log(error);
-   });
+app.listen(PORT, () => {
+   console.log(`App listening to port : ${PORT}`);
+});
