@@ -9,7 +9,7 @@
     "dev": "nodemon index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Jainish Pathak",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.0.1"

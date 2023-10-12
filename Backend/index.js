@@ -22,13 +22,13 @@ app.post('/books', async (request, response) => {
             message: 'Send all required fileds: title, author, publishYear'
          });
       }
-      const newbook = {
+      const newBook = {
          title: request.body.title,
          author: request.body.author,
          publishYear: request.body.publishYear,
       };
 
-      const book = await Book.create(newbook);
+      const book = await Book.create(newBook);
 
       return response.status(201).send(book);
 
