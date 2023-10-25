@@ -2,6 +2,7 @@ import express from "express";
 import { PORT } from "./config.js";
 import { Book } from "./models/bookmodel.js";
 import connectToMongo from "./database/db.js"
+import bookRoute from "./Routes/bookRoute.js"
 const app = express()
 connectToMongo()
 app.use(express.json());
@@ -11,32 +12,7 @@ app.get('/', (request, response) => {
    return response.status(234).send('Hello')
 });
 
-app.post('/books', async (request, response) => {
-   try {
-      if (
-         !request.body.title ||
-         !request.body.author ||
-         !request.body.publishYear
-      ) {
-         return response.status(400).send({
-            message: 'Send all required fileds: title, author, publishYear'
-         });
-      }
-      const newBook = {
-         title: request.body.title,
-         author: request.body.author,
-         publishYear: request.body.publishYear,
-      };
-
-      const book = await Book.create(newBook);
-
-      return response.status(201).send(book);
-
-   } catch (error) {
-      console.log(error.message);
-      response.status(500).send({ message: error.message });
-   }
-});
+app.use('/books', bookRoute);
 
 app.listen(PORT, () => {
    console.log(`App listening to port : ${PORT}`);
