@@ -3,9 +3,18 @@ import { PORT } from "./config.js";
 import { Book } from "./models/bookmodel.js";
 import connectToMongo from "./database/db.js"
 import bookRoute from "./Routes/bookRoute.js"
+import cors from 'cors';
 const app = express()
 connectToMongo()
 app.use(express.json());
+
+app.use(
+   cors({
+      origin: 'http://localhost:3000',
+      methods: ['GET', 'PUT', 'POST', 'DELETE'],
+      allowedHeaders: ['content-Type'],
+   })
+);
 
 app.get('/', (request, response) => {
    console.log(request);
