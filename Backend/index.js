@@ -8,13 +8,14 @@ const app = express()
 connectToMongo()
 app.use(express.json());
 
-app.use(
-   cors({
-      origin: 'http://localhost:3000',
-      methods: ['GET', 'PUT', 'POST', 'DELETE'],
-      allowedHeaders: ['content-Type'],
-   })
-);
+app.use(cors());
+// app.use(
+//    cors({
+//       origin: 'http://localhost:3000',
+//       methods: ['GET', 'PUT', 'POST', 'DELETE'],
+//       allowedHeaders: ['content-Type'],
+//    })
+// );
 
 app.get('/', (request, response) => {
    console.log(request);
